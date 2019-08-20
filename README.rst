@@ -1,7 +1,7 @@
 Plover Polaroid
 =====
 
-This plugin enables Plover users to print "steno Polaroids" by connecting a generic thermal receipt tape printer.
+This plugin enables Plover users to print "steno Polaroids" by printing stenographic and translated output to a generic thermal receipt tape printer (ESCPOS).
 
 Installation
 ============
@@ -12,10 +12,12 @@ Clone repository, and install from source.
 
 Launch Plover and click on "Polaroid."
 
+Start writing.
+
 License
 =======
 
-This plugin is licensed under GNU General Public License v2 or later (GPLv2+).
+This plugin is licensed under GNU General Public License v3 or later (GPLv3+).
 
 Icon made by `Freepik`_ from `www.flaticon.com`_ is licensed by `CC 3.0
 BY`_.
