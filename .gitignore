@@ -1,0 +1,5 @@
+# python
+*.egg
+
+# mac
+.DS_Store
