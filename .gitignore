@@ -5,4 +5,4 @@
 .DS_Store
 .vscode
 .git
-plover_polaroid.py.autosave 
+*.autosave 
