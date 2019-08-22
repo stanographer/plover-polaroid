@@ -1,0 +1,5 @@
+
+exclude plover_polaroid/*_rc.py
+exclude plover_polaroid/*_ui.py
+include plover_polaroid/*.ui
+recursive-include plover_polaroid/resources *

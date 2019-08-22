@@ -1,0 +1,17 @@
+{
+    "files": [
+        [
+            "plover_polaroid/resources/*.qrc",
+            "plover_polaroid"
+        ],
+        [
+            "plover_polaroid/*.ui",
+            "plover_polaroid"
+        ]
+    ],
+    "hooks": [],
+    "pyrcc": "pyrcc5",
+    "pyrcc_options": "",
+    "pyuic": "pyuic5",
+    "pyuic_options": "--from-import"
+}
