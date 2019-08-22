@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>381</height>
+    <width>307</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -36,6 +36,12 @@
      <height>16</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
     <string>Polaroid</string>
    </property>
@@ -44,9 +50,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
-     <width>221</width>
-     <height>51</height>
+     <y>90</y>
+     <width>291</width>
+     <height>31</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -73,18 +79,134 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPlainTextEdit" name="tape">
+  <widget class="QPlainTextEdit" name="_tape">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>90</y>
-     <width>221</width>
-     <height>281</height>
+     <y>190</y>
+     <width>291</width>
+     <height>211</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>150</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QLineEdit" name="_vendor_id"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="_prod_id"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="_in_ep"/>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="_out_ep"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>120</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>VendorID</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>ProdID</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>in_ep</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>out_ep</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>291</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Print your steno notes and realtime to</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_7">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>201</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>a thermal receipt printer.</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>291</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <widget class="QPushButton" name="_start">
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="_close">
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources>
