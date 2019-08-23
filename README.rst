@@ -39,6 +39,10 @@ and finding the printer on the list of USB devices. Should look something like t
 FYI: I'm using the MUNBYN IMP017 58MM Bluetooth Thermal Receipt Printer.
 https://www.amazon.com/gp/product/B07N86R5RB/ref=ppx_yo_dt_b_asin_image_o04_s00?ie=UTF8&psc=1
 
+There are, however, cheaper options:
+https://www.amazon.com/TEROW-Portable-Printing-Compatible-Commands/dp/B07848ZBXT/ref=sr_1_9?keywords=thermal+receipt+printer&qid=1566570223&s=gateway&sr=8-9
+https://www.amazon.com/Aibecy-Portable-Wireless-Printing-Compatible/dp/B06VXPLLMQ/ref=sr_1_38?keywords=thermal+receipt+printer&qid=1566570320&s=gateway&sr=8-38
+
 Doc here:
 https://doc-0k-0g-docs.googleusercontent.com/docs/securesc/jiiqkvtdl933m1ft21dj144gp5gmkloc/n6sel8gi37rhe8jb67odbvnr0mbe7l15/1566540000000/01002604266692246088/09277742830706117903/1Xqanp5rBU-5IWyCEkgHOFz90hSendQEF
 
