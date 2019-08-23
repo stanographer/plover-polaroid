@@ -57,23 +57,29 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="_both_steno_realtime">
+      <property name="text">
+       <string>Both</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="_text_only">
+      <property name="accessibleDescription">
+       <string>Print only realtime text</string>
+      </property>
       <property name="text">
        <string>Text</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="_raw_only">
+      <property name="accessibleDescription">
+       <string>Print only raw steno</string>
+      </property>
       <property name="text">
        <string>Raw Steno</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QRadioButton" name="radioButton_3">
-      <property name="text">
-       <string>Both</string>
       </property>
      </widget>
     </item>

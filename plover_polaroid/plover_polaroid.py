@@ -54,6 +54,8 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         self._close.clicked.connect(self.close)
         self._start.clicked.connect(self.start_printer)
         
+        self._both_steno_realtime.setChecked(True)
+        
         engine.signal_connect('config_changed', self.on_config_changed)
         engine.signal_connect('stroked', self.on_stroke)
         self.on_config_changed(engine.config)
@@ -77,9 +79,11 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
     def on_stroke(self, stroke: Stroke):
         if (self.started):
             raw_steno = ""
+            final_text = ""
             keys = stroke.steno_keys[:]
             
             formatted = RetroFormatter(self.translations)
+            last_words = formatted.last_words(0)
             
             for key in keys:
                 if (len(keys) == 2 and key.find("-") != -1):
@@ -88,19 +92,27 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                     raw_steno += key.replace("-", "")
                 else:
                     raw_steno += key
-                    
-            last_words = formatted.last_text(None)
             
-            final_text = raw_steno + "\t\t" + "".join(last_words) or ""
+            if (self._both_steno_realtime.isChecked()):
+                final_text = raw_steno + "\t\t" + "".join(last_words) or ""
             
+            elif (self._raw_only.isChecked()):
+                final_text = raw_steno
+            
+            else:
+                final_text = "".join(last_words) or ""
+            
+            print(formatted.last_fragments())
             print(raw_steno)
             print(keys)
             print(last_words)
             self._tape.appendPlainText(final_text) 
-            
+                
             if (self.printer):
                 self.printer.text(final_text)
                 self.printer.text("\n")
+            
+            final_text = ""
         
     def _save_state(self, settings: QSettings):
         '''
