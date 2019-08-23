@@ -51,10 +51,13 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         self._prod_id.setText(str(hex(self.vendor_id)))
         self._in_ep.setText(str(hex(self.in_ep)))
         self._out_ep.setText(str(hex(self.out_ep)))
-        self._close.clicked.connect(self.close)
         self._start.clicked.connect(self.start_printer)
         
         self._both_steno_realtime.setChecked(True)
+        
+        self._both_steno_realtime.toggled.connect(self.both_clicked)
+        self._raw_only.toggled.connect(self.raw_steno_only_clicked)
+        self._text_only.toggled.connect(self.text_only_clicked)
         
         engine.signal_connect('config_changed', self.on_config_changed)
         engine.signal_connect('stroked', self.on_stroke)
@@ -107,7 +110,6 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                 except:
                     self._tape.setPlainText("Printer is not connected or cannot establish communication.") 
                 
-            
             else:
                 tran_text = self.translations
                 formatter = RetroFormatter(self.translations) or ""
@@ -118,7 +120,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                     
                 self._tape.setPlainText(paragraph)
                 
-                if (word.find("\n" or "\r") > -1):
+                if (word and word.find("\n" or "\r") > -1):
                     try:
                         self.printer.text(paragraph)
                         self.printer.text("\n")
@@ -126,8 +128,6 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                     except:
                         self._tape.setPlainText("Printer is not connected or establish communication.") 
                 
-                
- 
             
     def left_right(self, p, left, right):
         try:
@@ -135,7 +135,16 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             
             self.printer.text("\n")
         except:
-            self._tape.setPlainText("Printer is not connected or cannot establish communication.") 
+            self._tape.setPlainText("Printer is not connected or cannot establish communication.")
+            
+    def both_clicked(self):
+        self._tape.setPlainText("Both your steno and translations will appear side by side.")
+        
+    def raw_steno_only_clicked(self):
+        self._tape.setPlainText("Only your raw steno notes will be printed.")
+    
+    def text_only_clicked(self):
+        self._tape.setPlainText("In Translations Only mode, send a new line (return or enter strokes) to print your entire output.")    
         
     def _save_state(self, settings: QSettings):
         '''

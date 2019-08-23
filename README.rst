@@ -12,10 +12,31 @@ This plugin is not currently on the official Plugin Manager.
 2. cd into directory.
 3. `pip3 install . --user --no-cache-dir`
 4. Restart Plover.
+5. Launch Plover and click on "Polaroid."
+6. Check settings, choose mode, and start writing.
 
-Launch Plover and click on "Polaroid."
+idVendor is the Vendor ID
+• VendorID is the Vendor ID
+• ProdID is the Product ID
+• in_ep is the input end point (default = 0x82) but my printer model takes 0x81
+• out_ep is the output end point (default = 0x01) but my printer model takes 0x3
 
-Start writing.
+These values can be found out by going into Apple menu => About This Mac => System Report
+and finding the printer on the list of USB devices. Should look something like this:
+
+```
+  Product ID:	0x5011
+  Vendor ID:	0x0416  (Winbond Electronics Corp.)
+  Version:	2.00
+  Serial Number:	Printer
+  Speed:	Up to 12 Mb/sec
+  Manufacturer:	STMicroelectronics
+  Location ID:	0x14500000 / 48
+  Current Available (mA):	500
+  Current Required (mA):	100
+  Extra Operating Current (mA):	0
+
+```
 
 License
 =======
