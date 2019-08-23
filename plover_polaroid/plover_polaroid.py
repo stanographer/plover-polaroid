@@ -89,7 +89,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
            self._connect.setEnabled(True)
 
     def on_stroke(self, stroke: Stroke):
-        if (self.started):
+        if self.started == True:
             raw_steno = ""
             tran_text = ""
             paragraph = ""
@@ -108,12 +108,12 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                 else:
                     raw_steno += key
             
-            if (self._both_steno_realtime.isChecked()):
-                if (self.printer):
+            if self._both_steno_realtime.isChecked():
+                if self.printer:
                     self._tape.appendPlainText(raw_steno + "\t\t" + tran_text) 
                     self.left_right(self.printer, raw_steno, tran_text)
             
-            elif (self._raw_only.isChecked()):
+            elif self._raw_only.isChecked():
                 self._tape.appendPlainText(raw_steno) 
                 
                 try:
@@ -130,7 +130,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                 for word in formatter.last_words(-1):
                     paragraph += word
                     
-                    if (word and word.find("\n" or "\r") > -1):
+                    if word and word.find("\n" or "\r") > -1:
                         try:
                             self.printer.text(paragraph)
                             self.printer.text("\n\n")
@@ -178,8 +178,6 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
     def on_config_changed(self, config):
         ''' Updates state based off of the new Plover configuration '''
 
-        # If something unrelated changes like a new dictionary
-        # being added then the system name will not be in config
         if 'system_name' not in config:
             return
 
