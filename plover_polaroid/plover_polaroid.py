@@ -32,6 +32,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         IN_EP = 0x81
         OUT_EP = 0x03
         
+        ''' Use as systen defaults '''
         self.vendor_id = VENDOR_ID
         self.prod_id = PRODUCT_ID
         self.in_ep = IN_EP
@@ -57,6 +58,8 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         
         ''' Get the state of the Translator '''
         self.translations = engine._translator.get_state().translations
+        
+        ''' We want the starting point of the Translations list to be at the end '''
         self.starting_point = len(self.translations)
         
         engine.signal_connect('config_changed', self.on_config_changed)
@@ -71,6 +74,8 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             self._tape.setPlainText("Printer is ready.")
             self._connect.setEnabled(False)
             self.started = True
+            
+            ''' Create the printer object. '''
             self.printer = Usb(
                 self.vendor_id,
                 self.prod_id,
@@ -90,9 +95,11 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             paragraph = ""
             keys = stroke.steno_keys[:]
 
+            ''' Contains an array of the latest dictionary entry matches '''
             formatted = self.translations[-1].english if self.translations else []
             tran_text = formatted or ""
             
+            ''' Loop through the inputted keys to format output. (I.e. with one key, include hyphen to know which it was) '''
             for key in keys:
                 if (len(keys) == 2 and key.find("-") != -1):
                     raw_steno += key[0] + key[1].replace("-", "")
@@ -127,6 +134,8 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                         try:
                             self.printer.text(paragraph)
                             self.printer.text("\n\n")
+                            
+                            ''' Make sure to reset the start pointer '''
                             self.starting_point = len(self.translations)
                             paragraph = ""
                             
@@ -135,9 +144,10 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                             self._connect.setEnabled(True)
                             
                 self._tape.setPlainText(paragraph)
-                
-    ''' Formats receipt output so that steno is left and translations on right. '''          
+                        
     def left_right(self, p, left, right):
+        ''' Formats receipt output so that steno is left and translations on right. '''  
+        
         try:
             p.text("{:<20}{:>12}".format(left, right))
             self.printer.text("\n")
@@ -160,7 +170,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
     def _save_state(self, settings: QSettings):
         '''
         Save state to settings.
-        Called via save_state through plover.qui_qt.utils.WindowState
+        Called via save_state through plover.qui_qt.utils.WindowState 
         '''
 
         settings.setValue('system_file_map', self._system_file_map)
@@ -174,7 +184,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             return
 
     def _restore_state(self, settings: QSettings):
-        '''
+        ''' 
         Restore state from settings.
         Called via restore_state through plover.qui_qt.utils.WindowState
         '''
