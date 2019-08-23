@@ -62,6 +62,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
 
     def start_printer(self, engine: StenoEngine):
         try:
+            self._tape.setPlainText("Printer is ready.") 
             self.printer = Usb(
                 self.vendor_id,
                 self.prod_id,
@@ -71,20 +72,18 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             )
             
             self.started = True
-            
+
         except:
-           self._tape.appendPlainText("Printer cable isn't connected or there was an error connecting.") 
+           self._tape.setPlainText("Printer is not connected or cannot establish communication.") 
 
     def on_stroke(self, stroke: Stroke):
         if (self.started):
             raw_steno = ""
             tran_text = ""
-            paragraph = ""
             keys = stroke.steno_keys[:]
 
             formatted = self.translations[-1].english if self.translations else []
             tran_text = formatted or ""
-            print(tran_text)
             
             for key in keys:
                 if (len(keys) == 2 and key.find("-") != -1):
@@ -96,25 +95,47 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             
             if (self._both_steno_realtime.isChecked()):
                 if (self.printer):
-                    self.left_right(self.printer, raw_steno, tran_text)
-                    self.printer.text("\n")
                     self._tape.appendPlainText(raw_steno + "\t\t" + tran_text) 
+                    self.left_right(self.printer, raw_steno, tran_text)
             
             elif (self._raw_only.isChecked()):
-                self.printer.text(raw_steno)
-                self.printer.text("\n")
                 self._tape.appendPlainText(raw_steno) 
+                
+                try:
+                    self.printer.text(raw_steno)
+                    self.printer.text("\n")
+                except:
+                    self._tape.setPlainText("Printer is not connected or cannot establish communication.") 
+                
             
             else:
                 tran_text = self.translations
-                last_words = RetroFormatter(self.translations).last_words(0)
-                word = last_words[len(last_words) - 1 or 0]
-                self.printer.text(word)
-                self._tape.appendPlainText(word) 
+                formatter = RetroFormatter(self.translations) or ""
+                paragraph = ""
+                
+                for word in formatter.last_words(-1):
+                    paragraph += word
+                    
+                self._tape.setPlainText(paragraph)
+                
+                if (word.find("\n" or "\r") > -1):
+                    try:
+                        self.printer.text(paragraph)
+                        self.printer.text("\n")
+                        paragraph = ""
+                    except:
+                        self._tape.setPlainText("Printer is not connected or establish communication.") 
+                
+                
  
             
     def left_right(self, p, left, right):
-        p.text("{:<20}{:>12}".format(left, right))
+        try:
+            p.text("{:<20}{:>12}".format(left, right))
+            
+            self.printer.text("\n")
+        except:
+            self._tape.setPlainText("Printer is not connected or cannot establish communication.") 
         
     def _save_state(self, settings: QSettings):
         '''

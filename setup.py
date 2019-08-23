@@ -3,6 +3,8 @@
 __requires__ = '''
 plover>=4.0.0.dev2
 setuptools>=36.4.0
+libusb>=1.0.22b4
+escpos>=1.6
 '''
 
 from setuptools import setup
