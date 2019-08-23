@@ -2,22 +2,17 @@ from pathlib import Path
 from typing import Optional
 
 from PyQt5.QtCore import QSettings
-from PyQt5.QtWidgets import QFileDialog
 
 from plover import system
 from plover.config import CONFIG_DIR
 from plover.engine import StenoEngine
-from plover.gui_qt.i18n import get_gettext
 from plover.steno import Stroke
 from plover.translation import Translator, Translation
 from plover.gui_qt.tool import Tool
-from plover.gui_qt.utils import ToolBar
 from plover.formatting import RetroFormatter
 
 from escpos.printer import Usb
 from plover_polaroid.plover_polaroid_ui import Ui_PloverPolaroid
-
-_ = get_gettext()
 
 class PloverPolaroid(Tool, Ui_PloverPolaroid):
     ''' Prints your steno notes and/or your realtime output to a generic thermal receipt printer. '''
@@ -63,7 +58,6 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         ''' Get the state of the Translator '''
         self.translations = engine._translator.get_state().translations
         self.starting_point = len(self.translations)
-        print(self.translations)
         
         engine.signal_connect('config_changed', self.on_config_changed)
         engine.signal_connect('stroked', self.on_stroke)
@@ -178,3 +172,11 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         # being added then the system name will not be in config
         if 'system_name' not in config:
             return
+
+    def _restore_state(self, settings: QSettings):
+        '''
+        Restore state from settings.
+        Called via restore_state through plover.qui_qt.utils.WindowState
+        '''
+
+        self._system_file_map = settings.value('system_file_map', {}, dict)
