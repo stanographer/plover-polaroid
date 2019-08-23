@@ -61,7 +61,6 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         self.on_config_changed(engine.config)
 
     def start_printer(self, engine: StenoEngine):
-        print(self)
         try:
             self.printer = Usb(
                 self.vendor_id,
@@ -70,20 +69,22 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                 self.in_ep,
                 self.out_ep
             )
+            
             self.started = True
             
         except:
-           self._tape.appendPlainText("There was an error connecting to the printer.") 
-
+           self._tape.appendPlainText("Printer cable isn't connected or there was an error connecting.") 
 
     def on_stroke(self, stroke: Stroke):
         if (self.started):
             raw_steno = ""
-            final_text = ""
+            tran_text = ""
+            paragraph = ""
             keys = stroke.steno_keys[:]
-            
-            formatted = RetroFormatter(self.translations)
-            last_words = formatted.last_words(0)
+
+            formatted = self.translations[-1].english if self.translations else []
+            tran_text = formatted or ""
+            print(tran_text)
             
             for key in keys:
                 if (len(keys) == 2 and key.find("-") != -1):
@@ -94,25 +95,26 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                     raw_steno += key
             
             if (self._both_steno_realtime.isChecked()):
-                final_text = raw_steno + "\t\t" + "".join(last_words) or ""
+                if (self.printer):
+                    self.left_right(self.printer, raw_steno, tran_text)
+                    self.printer.text("\n")
+                    self._tape.appendPlainText(raw_steno + "\t\t" + tran_text) 
             
             elif (self._raw_only.isChecked()):
-                final_text = raw_steno
+                self.printer.text(raw_steno)
+                self.printer.text("\n")
+                self._tape.appendPlainText(raw_steno) 
             
             else:
-                final_text = "".join(last_words) or ""
+                tran_text = self.translations
+                last_words = RetroFormatter(self.translations).last_words(0)
+                word = last_words[len(last_words) - 1 or 0]
+                self.printer.text(word)
+                self._tape.appendPlainText(word) 
+ 
             
-            print(formatted.last_fragments())
-            print(raw_steno)
-            print(keys)
-            print(last_words)
-            self._tape.appendPlainText(final_text) 
-                
-            if (self.printer):
-                self.printer.text(final_text)
-                self.printer.text("\n")
-            
-            final_text = ""
+    def left_right(self, p, left, right):
+        p.text("{:<20}{:>12}".format(left, right))
         
     def _save_state(self, settings: QSettings):
         '''
