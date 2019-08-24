@@ -33,7 +33,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         IN_EP = 0x81
         OUT_EP = 0x03
 
-        # Use as systen defaults
+        # Use as system defaults
         self.vendor_id = VENDOR_ID
         self.prod_id = PRODUCT_ID
         self.in_ep = IN_EP
@@ -61,13 +61,18 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         # Get the state of the Translator
         self.translations = engine._translator.get_state().translations
 
+        # Get the state of the Translator
+        self.translations = engine._translator.get_state().translations
+        
         # We want the starting point of the Translations list to be at the end
         self.starting_point = len(self.translations)
 
+        # Engine event handlers
         engine.signal_connect('config_changed', self.on_config_changed)
         engine.signal_connect('stroked', self.on_stroke)
         self.on_config_changed(engine.config)
 
+        # Connect printer on init
         self.connect_printer()
 
     def connect_printer(self):
@@ -76,6 +81,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             self._connect.setEnabled(False)
             self.started = True
 
+            # Create the printer object.
             self.printer = Usb(
                 self.vendor_id,
                 self.prod_id,
@@ -148,7 +154,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                 self._tape.setPlainText(paragraph)
 
     def left_right(self, p, left, right):
-        ''' Formats receipt output so that steno is left and translations on right. '''
+        """ Formats receipt output so that steno is left and translations on right. """
 
         try:
             p.text("{:<20}{:>12}".format(left, right))
