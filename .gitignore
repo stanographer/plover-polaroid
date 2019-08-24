@@ -5,4 +5,5 @@
 .DS_Store
 .vscode
 .git
-*.autosave 
+*.autosave
+.idea
