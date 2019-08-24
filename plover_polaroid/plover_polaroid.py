@@ -26,13 +26,13 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         
         super(PloverPolaroid, self).__init__(engine)
         
-        ''' My printer's defaults '''
+        # My printer's defaults
         VENDOR_ID = 0x0416
         PRODUCT_ID = 0x5011
         IN_EP = 0x81
         OUT_EP = 0x03
         
-        ''' Use as systen defaults '''
+        # Use as systen defaults
         self.vendor_id = VENDOR_ID
         self.prod_id = PRODUCT_ID
         self.in_ep = IN_EP
@@ -42,13 +42,13 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         self._tape.setFocus()
         self.started = False
         
-        ''' Default vendor specs '''
+        # Default vendor specs
         self._vendor_id.setText(str(hex(self.vendor_id)))
         self._prod_id.setText(str(hex(self.vendor_id)))
         self._in_ep.setText(str(hex(self.in_ep)))
         self._out_ep.setText(str(hex(self.out_ep)))
         
-        ''' UI listeners '''
+        # UI listeners
         self._connect.clicked.connect(lambda: self.connect_printer())
         self._quit.clicked.connect(self.close)
         self._both_steno_realtime.setChecked(True)
@@ -56,17 +56,17 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
         self._raw_only.toggled.connect(self.raw_steno_only_clicked)
         self._text_only.toggled.connect(self.text_only_clicked)
         
-        ''' Get the state of the Translator '''
+        # Get the state of the Translator
         self.translations = engine._translator.get_state().translations
         
-        ''' We want the starting point of the Translations list to be at the end '''
+        # We want the starting point of the Translations list to be at the end
         self.starting_point = len(self.translations)
         
         engine.signal_connect('config_changed', self.on_config_changed)
         engine.signal_connect('stroked', self.on_stroke)
         self.on_config_changed(engine.config)
         
-        ''' Connect printer on init '''
+        # Connect printer on init
         self.connect_printer()
 
     def connect_printer(self):
@@ -75,7 +75,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             self._connect.setEnabled(False)
             self.started = True
             
-            ''' Create the printer object. '''
+            # Create the printer object.
             self.printer = Usb(
                 self.vendor_id,
                 self.prod_id,
@@ -95,11 +95,11 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
             paragraph = ""
             keys = stroke.steno_keys[:]
 
-            ''' Contains an array of the latest dictionary entry matches '''
+            # Contains an array of the latest dictionary entry matches
             formatted = self.translations[-1].english if self.translations else []
             tran_text = formatted or ""
             
-            ''' Loop through the inputted keys to format output. (I.e. with one key, include hyphen to know which it was) '''
+            # Loop through the inputted keys to format output. (I.e. with one key, include hyphen to know which it was)
             for key in keys:
                 if (len(keys) == 2 and key.find("-") != -1):
                     raw_steno += key[0] + key[1].replace("-", "")
@@ -135,7 +135,7 @@ class PloverPolaroid(Tool, Ui_PloverPolaroid):
                             self.printer.text(paragraph)
                             self.printer.text("\n\n")
                             
-                            ''' Make sure to reset the start pointer '''
+                            # Make sure to reset the start pointer
                             self.starting_point = len(self.translations)
                             paragraph = ""
                             
