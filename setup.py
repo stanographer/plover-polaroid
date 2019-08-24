@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 __requires__ = '''
+PyQt5
+python-escpos
+hidapi
 plover>=4.0.0.dev2
+pyusb
+Pillow
+libusb
 setuptools>=36.4.0
-libusb>=1.0.22b4
-escpos>=1.6
 '''
+
 
 from setuptools import setup
 
@@ -20,4 +25,4 @@ cmdclass = {
     'build_ui': BuildUi,
 }
 
-setup(cmdclass=cmdclass)
+setup(cmdclass=cmdclass, install_requires=['plover', 'PyQt5', 'escpos'])
