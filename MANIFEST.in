@@ -1,4 +1,3 @@
-
 exclude plover_polaroid/*_rc.py
 exclude plover_polaroid/*_ui.py
 include plover_polaroid/*.ui

@@ -8,9 +8,10 @@ Installation
 
 This plugin is not currently on the official Plugin Manager.
 
+0. Make sure you have libusb installed: ``brew install libusb``.
 1. Clone the repository.
 2. cd into directory.
-3. `pip3 install . --user --no-cache-dir`
+3. ``pip3 install . --user --no-cache-dir``
 4. Restart Plover.
 5. Launch Plover and click on "Polaroid."
 6. Check settings, choose mode, and start writing.
