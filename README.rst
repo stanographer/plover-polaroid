@@ -3,6 +3,8 @@ Plover Polaroid
 
 This plugin enables Plover users to print "steno Polaroids" by printing stenographic and translated output to a generic thermal receipt tape printer (ESCPOS).
 
+![steno output to receipt paper](https://user-images.githubusercontent.com/13160053/126172282-e143b8a4-6424-4d48-a21c-b0be273f22aa.jpg)
+
 Installation
 ============
 
