@@ -1,2 +1,2 @@
 pyqt-distutils==0.7.2
-pillow===8.2.0
+pillow===9.0.0
